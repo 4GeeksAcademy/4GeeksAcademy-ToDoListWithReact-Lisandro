@@ -1,26 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 
 //include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+    const [list, setList] = useState([]); //Array. Lista de items o coleccion de datos.
+    const [newTask, setNewTask] = useState(""); //String. Es una secuencia de caracteres.
+    //Estos son los estados iniciales.
+
+    //Despues pones la funcion que queres que se haga cuando haces click. Se puede poner despues del evento,
+    //pero es mejor que quede aca arriba asi se ve mas comodo. Es como que se usa abajo, pero se escribe arriba.
+    function agregarElemento(e) {      
+        if (e.keyCode === 13) {
+            setList(list.concat(newTask));         
+        } 
+    };
+
+
+    function eliminar(tarea) {
+        console.log(tarea);
+        //filtra todos los elementos menos al que le hacen click
+        
+    }
+
+
+    //Aca debajo en el Return empieza lo que es la parte del HTML, seria la estructura de lo que queres mostrar y el diseño.
+     //Pones el estado con el que queres que empiece,
+    //que lo declaramos arriba, al principio, en los espacios de memoria, Task y NewTask
+    return (
+        <div className="Container">
+		
+        <div className="input-group flex-nowrap">
+          <input type="text" className="form-control" onChange={(e)=>setNewTask(e.target.value)} onKeyDown={agregarElemento} placeholder="What needs to be done?" aria-label="Username" aria-describedby="addon-wrapping"/>
+        </div>
+
+        <div className="Otros elementos de la lista">
+        <ul>
+            {list.map((item) => <li>{item} <span onClick={()=>eliminar(item)}>X</span></li>)}
+        </ul>
+        </div>
+        </div>
+		)
+		}
 
 export default Home;
